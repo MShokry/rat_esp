@@ -12,12 +12,12 @@ void setup() {
   pinMode(esp_motion, INPUT);
   // Wifi Start
   WiFi.forceSleepWake();
+  WiFi.mode( WIFI_STA );
   IPAddress ip( 192, 168, 1, 29 );
   IPAddress gateway( 192, 168, 1, 1 );
   IPAddress subnet( 255, 255, 255, 0 );
   delay( 1 );
   WiFi.persistent( false );
-  WiFi.mode( WIFI_STA );
   WiFi.config( ip, gateway, subnet );
   WiFi.begin( "Ebni.Eitesal", "eitesalngo" );
 
