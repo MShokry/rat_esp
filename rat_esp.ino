@@ -88,35 +88,35 @@ bool load_wifi(){
             PRINTDEBUGLN(ip);*/
           } else {
             PRINTDEBUGLN("no custom ip in config");
-            return FALSE;
+            return false;
           }
         } else {
           PRINTDEBUGLN("failed to load json config");
-          return FALSE;
+          return false;
         }
       }
     }
   } else {
     PRINTDEBUGLN("failed to mount FS");
-    return FALSE;
+    return false;
   }
   //end read
   PRINTDEBUGLN(static_ip);
-  PRINTDEBUGLN(blynk_token);
-  PRINTDEBUGLN(mqtt_server);
-  return TRUE;
+  PRINTDEBUGLN(static_gw);
+  PRINTDEBUGLN(static_sn);
+  return true;
 }
 
 /*************************************************************************************
  *  Pinging the server
  *************************************************************************************/
 //Pingging main
-bool ping (String msg="alarm"){
+bool msg (String msg="alarm"){
    // Use WiFiClientSecure class to create TLS connection
   WiFiClient client;
   PRINTDEBUGLN("Connecting to:");
-  PRINTDEBUGLN(host);
-  if(!client.connect(host, httpsPort))
+  PRINTDEBUGLN(server);
+  if(!client.connect(server, 80))
   {
     PRINTDEBUGLN("Connection failed");
     return false;
@@ -129,7 +129,7 @@ bool ping (String msg="alarm"){
   PRINTDEBUGLN("Requesting URL:");
   PRINTDEBUGLN(url);
   client.print(String("GET ") + url + " HTTP/1.1\r\n" +
-               "Host: " + host + "\r\n" +
+               "Host: " + server + "\r\n" +
                "User-Agent: ratnest\r\n" +
                "Connection: close\r\n\r\n");
   PRINTDEBUGLN("Request sent");
@@ -144,8 +144,10 @@ bool ping (String msg="alarm"){
  *************************************************************************************/
 void setup() {
   // put your setup code here, to run once:
-  pinMode(esp_wake,OUTPUT);
-  digitalWrite(esp_wake, LOW);
+  pinMode(esp_ok,OUTPUT);
+  pinMode(esp_ack,OUTPUT);
+  digitalWrite(esp_ok, LOW);
+  digitalWrite(esp_ack, LOW);
   pinMode(esp_motion, INPUT);
 
   #if (DEBUG==1)
@@ -178,7 +180,7 @@ void setup() {
   WiFi.begin( "Ebni.Eitesal", "eitesalngo" );
   while (WiFi.status() != WL_CONNECTED)
   {
-    delay(500);
+    delay(100);
     PRINTDEBUG(".");
   }
   PRINTDEBUGLN(WiFi.localIP());
@@ -186,7 +188,7 @@ void setup() {
 }
 
 void loop() {
-  ADC_MODE(ADC_VCC);
+  //ADC_MODE(ADC_VCC);
   PRINTDEBUGLN(String("Voltage = ")+ ESP.getVcc() +String(" V"));
 
   //if Motion flag
@@ -203,6 +205,6 @@ void loop() {
   WiFi.forceSleepBegin();
   delay( 1 );
   // Going To Sleep
-  WiFi.disconnect( true );
-  delay( 10000 ); //Wain untill the nano close the system
+  WiFi.disconnect(true);
+  delay(10000); //Wain untill the nano close the system
 }
