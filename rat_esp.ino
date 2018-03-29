@@ -23,8 +23,8 @@
 #define esp_motion  D5         // Motion detected 
 #define esp_config  D6         // Config button
 #define esp_update  D7         // Update button
-#define esp_ack  D8            // Done operation and ready to sleep
-#define esp_ok D9
+#define esp_ack  D0            // Done operation and ready to sleep
+#define esp_ok D1
 
 #define API "/lock.php?place="
 char update_server[40] = "192.168.1.50";
@@ -116,7 +116,7 @@ bool msg (String msg="alarm"){
   WiFiClient client;
   PRINTDEBUGLN("Connecting to:");
   PRINTDEBUGLN(server);
-  if(!client.connect(server, 80))
+  if(!client.connect(server, 5000))
   {
     PRINTDEBUGLN("Connection failed");
     return false;
