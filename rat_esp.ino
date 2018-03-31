@@ -9,6 +9,7 @@
 #include <ESP8266HTTPClient.h>
 #include <ESP8266httpUpdate.h>
 
+
 #define DEBUG 1
 #if (DEBUG==1)
   #define PRINTDEBUGLN(STR) Serial.println(STR)
@@ -18,24 +19,28 @@
   #define PRINTDEBUG(STR) /*NOTHING*/
 #endif
 
+// Dont use D3,D4,D8 GPIO0,2,15 ,, RX,TX GPIO3,1 ,, ADC,TOUT
 
-//#define esp_wake  D4           //Reset and EN
-#define esp_motion  D5         // Motion detected 
-#define esp_config  D6         // Config button
-#define esp_update  D7         // Update button
-#define esp_ack  D0            // Done operation and ready to sleep
-#define esp_ok D1
+#define esp_ack     5       //D1 Done operation and ready to sleep
+#define esp_ok      4       //D2 ESP last operaion status
+#define esp_motion  14      //D5 Motion detected 
+#define esp_config  12      //D6 Config button
+#define esp_update  14      //D7 Update button
+
 
 #define API "/lock.php?place="
+// WIFI Configuration
 char update_server[40] = "192.168.1.50";
 char server[33] = "192.168.1.50";
 char server_port[6] = "80";
 char PLACE[20] = "Nest1";
-
 //default custom static IP
 char static_ip[16] = "192.168.1.10";
 char static_gw[16] = "192.168.1.1";
 char static_sn[16] = "255.255.255.0";
+
+char SSID[24] = "airlive";
+char SSID_pwd[24] = "";
 //flag for saving data
 bool shouldSaveConfig = false;
 
@@ -70,13 +75,21 @@ bool load_wifi(){
         #endif
         if (json.success()) {
           PRINTDEBUGLN("\nparsed json");
+          strcpy(SSID, json["ssid"]);
+          strcpy(SSID_pwd, json["ssid_pwd"]);
+          PRINTDEBUGLN(SSID);
+          PRINTDEBUGLN(SSID_pwd);
           if(json["update_server"]) 
             strcpy(update_server, json["update_server"]);
+          PRINTDEBUGLN(update_server);
           if(json["server"]) 
             strcpy(server, json["server"]);
-          if(json["server_port"]) 
-            strcpy(server_port, json["server_port"]);
-
+          PRINTDEBUGLN(server);
+          //if(json["server_port"]) 
+          //  strcpy(server_port, json["server_port"]);
+          //if(json["place"])
+          strcpy(PLACE, json["place"]);
+          PRINTDEBUGLN(PLACE);
           if(json["ip"]) {
             PRINTDEBUGLN("setting custom ip from config");
             strcpy(static_ip, json["ip"]);
@@ -95,6 +108,8 @@ bool load_wifi(){
           return false;
         }
       }
+    }else{
+      PRINTDEBUGLN("Files Doesn't exist");
     }
   } else {
     PRINTDEBUGLN("failed to mount FS");
@@ -125,7 +140,7 @@ bool msg (String msg="alarm"){
 
   String url = String(API) + String(PLACE) + String("&msg=");
   url += msg;
-  url += String("&v=") + ESP.getVcc();
+  url += String("&v=") + (ESP.getVcc()/102.40f);
   PRINTDEBUGLN("Requesting URL:");
   PRINTDEBUGLN(url);
   client.print(String("GET ") + url + " HTTP/1.1\r\n" +
@@ -138,7 +153,7 @@ bool msg (String msg="alarm"){
 
   return true;
 }
-
+ADC_MODE(ADC_VDD);
 /*************************************************************************************
  *  ////////////////////SETUP ////////////////
  *************************************************************************************/
@@ -149,6 +164,9 @@ void setup() {
   digitalWrite(esp_ok, LOW);
   digitalWrite(esp_ack, LOW);
   pinMode(esp_motion, INPUT);
+  pinMode(esp_motion, INPUT);
+  pinMode(esp_motion, INPUT);
+  pinMode(esp_motion, INPUT);
 
   #if (DEBUG==1)
     Serial.begin(115200);     // Initialize serial communications
@@ -158,53 +176,131 @@ void setup() {
     Serial.println();
     Serial.println("Author:: Mahmoud Shokry");
   #endif
-  /*
-  bool config = load_wifi();
-  
-  if(not config){
-  WiFiManagerParameter custom_update("update_server", "Update Server", update_server, 40);
-  WiFiManagerParameter custom_blynk_token("server", "Server", server, 34);
-  }
-  */
-
-  // Wifi Start
-  WiFi.forceSleepWake();
+  load_wifi();
   WiFi.mode(WIFI_STA);
-  //WiFi.setOutputPower(6);
-  IPAddress ip( 192, 168, 1, 29 );
-  IPAddress gateway( 192, 168, 1, 1 );
-  IPAddress subnet( 255, 255, 255, 0 );
-  delay( 1 );
-  WiFi.persistent( false );
-  WiFi.config( ip, gateway, subnet );
-  WiFi.begin( "Ebni.Eitesal", "eitesalngo" );
-  while (WiFi.status() != WL_CONNECTED)
-  {
-    delay(100);
-    PRINTDEBUG(".");
-  }
-  PRINTDEBUGLN(WiFi.localIP());
- 
 }
 
 void loop() {
   //ADC_MODE(ADC_VCC);
-  PRINTDEBUGLN(String("Voltage = ")+ ESP.getVcc() +String(" V"));
+  PRINTDEBUGLN(String("Voltage = ")+ (ESP.getVcc()) +String(" V"));
 
-  //if Motion flag
-  bool status = msg();
-  if(status)
-    digitalWrite(esp_ok, HIGH);
-  else
-    digitalWrite(esp_ok, LOW);
-  
-  digitalWrite(esp_ack,HIGH);
+  if(digitalRead(esp_motion)){
+      // Wifi Start
+    PRINTDEBUGLN("entering Motion detected");
+    WiFi.forceSleepWake();
+    delay(1);
+    WiFi.mode(WIFI_STA);
+    //WiFi.setOutputPower(6);
+    IPAddress _ip,_gw,_sn;
+    _ip.fromString(static_ip);
+    _gw.fromString(static_gw);
+    _sn.fromString(static_sn);
+    delay( 1 );
+    WiFi.persistent( false );
+    WiFi.config( _ip, _gw, _sn );
+    //WiFi.begin( "Ebni.Eitesal", "eitesalngo" );
+    WiFi.begin( SSID, SSID_pwd );
 
- // Trun Off WIFI force all close 
+    while (WiFi.status() != WL_CONNECTED)
+    {
+      delay(100);
+      PRINTDEBUG(".");
+    }
+    PRINTDEBUGLN(WiFi.localIP());
+    //if Motion flag
+    bool status = msg();
+    if(status)
+      digitalWrite(esp_ok, HIGH);
+    else
+      digitalWrite(esp_ok, LOW);
+    
+    digitalWrite(esp_ack,HIGH);
+
+   // Trun Off WIFI force all close 
+    //WiFi.mode( WIFI_OFF );
+    //WiFi.disconnect(true);
+    //WiFi.forceSleepBegin();
+    //delay( 1 );
+    // Going To Sleep
+  }
+  if(digitalRead(esp_update)){
+    digitalWrite(esp_ack,HIGH);
+  }
+  if(digitalRead(esp_config)){
+    PRINTDEBUGLN("entering configuration");
+
+    WiFi.forceSleepWake();
+    delay(1);
+    WiFiManagerParameter custom_update("update_server", "Update Server", update_server, 40);
+    WiFiManagerParameter custom_server("server", "Server", server, 34);
+    WiFiManagerParameter custom_place("place", "Location Name", PLACE, 20);
+    WiFiManager wifiManager;
+    #if (DEBUG==1)
+    wifiManager.setDebugOutput(true);
+    #endif
+    #if (DEBUG==0)
+    wifiManager.setDebugOutput(false);
+    #endif
+    //set config save notify callback
+    wifiManager.setSaveConfigCallback(saveConfigCallback);
+
+    //add all your parameters here
+    wifiManager.addParameter(&custom_update);
+    wifiManager.addParameter(&custom_server);
+    wifiManager.addParameter(&custom_place);
+    //set minimu quality of signal so it ignores AP's under that quality
+    //defaults to 8% to reduce the power next
+    //wifiManager.setMinimumSignalQuality();
+    
+    wifiManager.setTimeout(1750); // 14.7 min in seconds
+    wifiManager.startConfigPortal("Rat_nest","password");
+    
+    strcpy(update_server, custom_update.getValue());
+    strcpy(server, custom_server.getValue());
+    strcpy(PLACE, custom_place.getValue());
+    //strcpy(SSID, wifiManager.getSSID());
+    //strcpy(SSID_pwd, wifiManager.getSSIDpwd());
+    //PRINTDEBUGLN(WiFiManager.getConfigPortalSSID())
+    if (shouldSaveConfig) {
+      PRINTDEBUGLN("saving config");
+      DynamicJsonBuffer jsonBuffer;
+      JsonObject& json = jsonBuffer.createObject();
+      json["server"] = server;
+      json["update_server"] = update_server;
+      json["place"] = PLACE;
+      json["ssid"] =  WiFi.SSID();
+      json["ssid_pwd"] =  WiFi.psk();
+      json["ip"] = WiFi.localIP().toString();
+      json["gateway"] = WiFi.gatewayIP().toString();
+      json["subnet"] = WiFi.subnetMask().toString();
+
+      File configFile = SPIFFS.open("/config.json", "w");
+      if (!configFile) {
+        PRINTDEBUGLN("failed to open config file for writing");
+      }
+      #if (DEBUG==1)
+        json.prettyPrintTo(Serial);
+      #endif
+      json.printTo(configFile);
+      configFile.close();
+      //end save
+    }
+    PRINTDEBUGLN("All Done configuration");
+    WiFi.mode(WIFI_STA);
+    digitalWrite(esp_ack,HIGH);
+  }
+
+  wifi_set_sleep_type(LIGHT_SLEEP_T);
+  wifi_fpm_set_sleep_type(LIGHT_SLEEP_T);
+  WiFi.disconnect(true);
   WiFi.mode( WIFI_OFF );
   WiFi.forceSleepBegin();
-  delay( 1 );
-  // Going To Sleep
-  WiFi.disconnect(true);
-  delay(10000); //Wain untill the nano close the system
+  delay(1);
+  wifi_fpm_open();
+  wifi_fpm_do_sleep(26843455);
+  long endMs = millis() + 20000;
+  while (millis() < endMs) {
+     yield();
+  }
+  //delay(10000); //Wain untill the nano close the system
 }
