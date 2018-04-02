@@ -25,7 +25,7 @@
 #define esp_ok      4       //D2 ESP last operaion status
 #define esp_motion  14      //D5 Motion detected 
 #define esp_config  12      //D6 Config button
-#define esp_update  14      //D7 Update button
+#define esp_update  13      //D7 Update button
 
 
 #define API "/lock.php?place="
