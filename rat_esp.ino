@@ -28,15 +28,17 @@
 #define esp_update  13      //D7 Update button
 
 
-#define API "/lock.php?place="
+#define API "?name="
 // WIFI Configuration
-char update_server[40] = "192.168.1.50";
-char server[33] = "192.168.1.50";
+char update_server[30] = "7elol.com";
+char update_server_page[30] = "/update/finger.php";
+char server[30] = "7elol.com";
+char server_page[30] = "/update/rfid.php";
 char server_port[6] = "80";
 char PLACE[20] = "Nest1";
 //default custom static IP
-char static_ip[16] = "192.168.1.10";
-char static_gw[16] = "192.168.1.1";
+char static_ip[16] = "192.168.0.10";
+char static_gw[16] = "192.168.0.1";
 char static_sn[16] = "255.255.255.0";
 
 char SSID[24] = "airlive";
@@ -80,11 +82,17 @@ bool load_wifi(){
           PRINTDEBUGLN(SSID);
           PRINTDEBUGLN(SSID_pwd);
           if(json["update_server"]) 
-            strcpy(update_server, json["update_server"]);
+          strcpy(update_server, json["update_server"]);          
           PRINTDEBUGLN(update_server);
-          if(json["server"]) 
-            strcpy(server, json["server"]);
+          if(json["update_server_page"]) 
+            strcpy(update_server_page, json["update_server_page"]);          
+          PRINTDEBUGLN(update_server_page);
+          //if(json["server"]) 
+          strcpy(server, json["server"]);
           PRINTDEBUGLN(server);
+          if(json["server_page"])
+            strcpy(server_page, json["server_page"]);
+          PRINTDEBUGLN(server_page);
           //if(json["server_port"]) 
           //  strcpy(server_port, json["server_port"]);
           //if(json["place"])
@@ -131,16 +139,16 @@ bool msg (String msg="alarm"){
   WiFiClient client;
   PRINTDEBUGLN("Connecting to:");
   PRINTDEBUGLN(server);
-  if(!client.connect(server, 5000))
+  if(!client.connect(server, 80))
   {
     PRINTDEBUGLN("Connection failed");
     return false;
   }
   // URL request
 
-  String url = String(API) + String(PLACE) + String("&msg=");
+  String url = String(server_page) + String(API) + String(PLACE) + String("&msg=");
   url += msg;
-  url += String("&v=") + (ESP.getVcc()/102.40f);
+  url += String("&v=") + (ESP.getVcc());
   PRINTDEBUGLN("Requesting URL:");
   PRINTDEBUGLN(url);
   client.print(String("GET ") + url + " HTTP/1.1\r\n" +
@@ -164,9 +172,8 @@ void setup() {
   digitalWrite(esp_ok, LOW);
   digitalWrite(esp_ack, LOW);
   pinMode(esp_motion, INPUT);
-  pinMode(esp_motion, INPUT);
-  pinMode(esp_motion, INPUT);
-  pinMode(esp_motion, INPUT);
+  pinMode(esp_update, INPUT);
+  pinMode(esp_config, INPUT);
 
   #if (DEBUG==1)
     Serial.begin(115200);     // Initialize serial communications
@@ -197,7 +204,7 @@ void loop() {
     _sn.fromString(static_sn);
     delay( 1 );
     WiFi.persistent( false );
-    WiFi.config( _ip, _gw, _sn );
+    WiFi.config( _ip, _gw, _gw, _sn );
     //WiFi.begin( "Ebni.Eitesal", "eitesalngo" );
     WiFi.begin( SSID, SSID_pwd );
 
@@ -208,7 +215,12 @@ void loop() {
     }
     PRINTDEBUGLN(WiFi.localIP());
     //if Motion flag
-    bool status = msg();
+    bool status = false;
+    if(!digitalRead(esp_update)){
+      status = msg();
+    }else{
+      status = msg("test");
+    }
     if(status)
       digitalWrite(esp_ok, HIGH);
     else
@@ -222,17 +234,17 @@ void loop() {
     //WiFi.forceSleepBegin();
     //delay( 1 );
     // Going To Sleep
-  }
-  if(digitalRead(esp_update)){
+  }else  if(digitalRead(esp_update)){
     digitalWrite(esp_ack,HIGH);
-  }
-  if(digitalRead(esp_config)){
+  }else if(digitalRead(esp_config)){
     PRINTDEBUGLN("entering configuration");
 
     WiFi.forceSleepWake();
     delay(1);
-    WiFiManagerParameter custom_update("update_server", "Update Server", update_server, 40);
-    WiFiManagerParameter custom_server("server", "Server", server, 34);
+    WiFiManagerParameter custom_update("update_server", "Update Server", update_server, 34);
+    WiFiManagerParameter custom_update_page("update_server_page", "Update Server route", update_server_page, 34);
+    WiFiManagerParameter custom_server("server", "Server name", server, 34);
+    WiFiManagerParameter custom_server_page("server_page", "Server route", server_page, 34);
     WiFiManagerParameter custom_place("place", "Location Name", PLACE, 20);
     WiFiManager wifiManager;
     #if (DEBUG==1)
@@ -246,34 +258,40 @@ void loop() {
 
     //add all your parameters here
     wifiManager.addParameter(&custom_update);
+    wifiManager.addParameter(&custom_update_page);
     wifiManager.addParameter(&custom_server);
+    wifiManager.addParameter(&custom_server_page);
     wifiManager.addParameter(&custom_place);
     //set minimu quality of signal so it ignores AP's under that quality
     //defaults to 8% to reduce the power next
     //wifiManager.setMinimumSignalQuality();
     
-    wifiManager.setTimeout(1750); // 14.7 min in seconds
+    wifiManager.setTimeout(280); // 14.7 min in seconds
     wifiManager.startConfigPortal("Rat_nest","password");
     
     strcpy(update_server, custom_update.getValue());
+    strcpy(update_server_page, custom_update_page.getValue());
     strcpy(server, custom_server.getValue());
+    strcpy(server_page, custom_server_page.getValue());
     strcpy(PLACE, custom_place.getValue());
     //strcpy(SSID, wifiManager.getSSID());
     //strcpy(SSID_pwd, wifiManager.getSSIDpwd());
     //PRINTDEBUGLN(WiFiManager.getConfigPortalSSID())
     if (shouldSaveConfig) {
       PRINTDEBUGLN("saving config");
+      digitalWrite(esp_ok, HIGH);
       DynamicJsonBuffer jsonBuffer;
       JsonObject& json = jsonBuffer.createObject();
       json["server"] = server;
+      json["server_page"] = server_page;
       json["update_server"] = update_server;
+      json["update_server_page"] = update_server_page;
       json["place"] = PLACE;
       json["ssid"] =  WiFi.SSID();
       json["ssid_pwd"] =  WiFi.psk();
       json["ip"] = WiFi.localIP().toString();
       json["gateway"] = WiFi.gatewayIP().toString();
       json["subnet"] = WiFi.subnetMask().toString();
-
       File configFile = SPIFFS.open("/config.json", "w");
       if (!configFile) {
         PRINTDEBUGLN("failed to open config file for writing");
@@ -284,6 +302,8 @@ void loop() {
       json.printTo(configFile);
       configFile.close();
       //end save
+    }else{
+      digitalWrite(esp_ok, LOW);
     }
     PRINTDEBUGLN("All Done configuration");
     WiFi.mode(WIFI_STA);
