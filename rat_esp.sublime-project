@@ -1,0 +1,15 @@
+{
+    "folders":
+    [
+      {
+        "path": "."
+      }
+    ],
+    "settings":
+    {
+	  "path": "/home/mshokry/Programming/arduino-1.8.5/arduino",
+	  "board": "esp8266:esp8266:nodemcuv2:CpuFrequency=80",
+	  //"board": "arduino:avr:nano",
+	  "port": "/dev/ttyUSB0"
+	}
+  }

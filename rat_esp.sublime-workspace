@@ -1,0 +1,804 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"server_",
+				"server_page"
+			],
+			[
+				"update_server_",
+				"update_server_page"
+			],
+			[
+				"esp_",
+				"esp_ok"
+			],
+			[
+				"Hi",
+				"HIGH"
+			],
+			[
+				"dgita",
+				"digitalWrite\tDeviot digitalWrite"
+			],
+			[
+				"_",
+				"_ssid"
+			],
+			[
+				"SS",
+				"SSID"
+			],
+			[
+				"update",
+				"update_server"
+			],
+			[
+				"upda",
+				"update_server"
+			],
+			[
+				"max_wait_",
+				"max_wait_config"
+			],
+			[
+				"max",
+				"max_wait_server"
+			],
+			[
+				"tes",
+				"TEST_FLAG"
+			],
+			[
+				"power_usa",
+				"power_usart0_disable"
+			],
+			[
+				"esp",
+				"esp_config"
+			],
+			[
+				"btn_",
+				"btn_reset"
+			],
+			[
+				"box",
+				":ballot_box_with_check: ☑️\tballot box with check"
+			],
+			[
+				"server",
+				"server_port"
+			],
+			[
+				"ser",
+				"Server"
+			],
+			[
+				"prin",
+				"PRINTDEBUG"
+			],
+			[
+				"digita",
+				"digitalRead\tDeviot digitalRead"
+			],
+			[
+				"digia",
+				"digitalRead\tDeviot digitalRead"
+			],
+			[
+				"end",
+				"endif"
+			],
+			[
+				"hi",
+				"HIGH"
+			],
+			[
+				"st",
+				"status"
+			],
+			[
+				"HI",
+				"HIGH"
+			],
+			[
+				"sleep",
+				"Sleep"
+			],
+			[
+				"digi",
+				"digitalWrite\tDeviot digitalWrite"
+			],
+			[
+				"printd",
+				"PRINTDEBUGLN"
+			],
+			[
+				"PR",
+				"PRINTDEBUG"
+			],
+			[
+				"con",
+				"config"
+			],
+			[
+				"se",
+				"selectms"
+			],
+			[
+				"bes",
+				"best_model_num\tstatement"
+			],
+			[
+				"lo",
+				"logger\tstatement"
+			],
+			[
+				"log",
+				"logging\tmodule"
+			],
+			[
+				"get",
+				"get_all_Xlengths\tfunction"
+			],
+			[
+				"score",
+				"score\tstatement"
+			],
+			[
+				"all",
+				"all_but_w\tstatement"
+			],
+			[
+				"sum",
+				"sum_scores\tstatement"
+			],
+			[
+				"len",
+				"lengths\tstatement"
+			],
+			[
+				"x",
+				"X\tstatement"
+			],
+			[
+				"min_",
+				"min_n_components\tstatement"
+			],
+			[
+				"NO",
+				"NOTSET\tstatement"
+			],
+			[
+				"N",
+				"None"
+			],
+			[
+				"th",
+				"this_word\tstatement"
+			],
+			[
+				"w",
+				"word"
+			],
+			[
+				"av",
+				"avg\tstatement"
+			],
+			[
+				"no",
+				"None\tkeyword"
+			],
+			[
+				"model",
+				"models\tstatement"
+			],
+			[
+				"sco",
+				"scores\tstatement"
+			],
+			[
+				"cv_",
+				"cv_test_idx\tstatement"
+			],
+			[
+				"cv",
+				"cv_train_idx\tstatement"
+			],
+			[
+				"min",
+				"min_model\tstatement"
+			],
+			[
+				"SelectorC",
+				"SelectorConstant"
+			],
+			[
+				"S",
+				"SelectorBIC"
+			],
+			[
+				"bi",
+				"bic_scores\tstatement"
+			],
+			[
+				"E",
+				"Exception\tclass"
+			],
+			[
+				"bas",
+				"base_model\tfunction"
+			],
+			[
+				"ma",
+				"max_n_components\tstatement"
+			],
+			[
+				"wdt",
+				"wdt_wake"
+			],
+			[
+				"to",
+				"toint"
+			],
+			[
+				"s",
+				"sleep\tfunction"
+			],
+			[
+				"Tiem",
+				"TimeoutError\tclass"
+			],
+			[
+				"sys",
+				"system\tfunction"
+			],
+			[
+				"SIG",
+				"SIGALRM\tinstance"
+			],
+			[
+				"sig",
+				"signal\tfunction"
+			],
+			[
+				"go",
+				"goal\tstatement"
+			],
+			[
+				"level",
+				"level_sum\tstatement"
+			],
+			[
+				"s_levl",
+				"s_levels\tstatement"
+			],
+			[
+				"node",
+				"node_s2\tparam"
+			],
+			[
+				"__",
+				"__eq__\tfunction"
+			],
+			[
+				"is",
+				"is_mutex"
+			],
+			[
+				"ac",
+				"action\tstatement"
+			],
+			[
+				"node_",
+				"node_a2\tparam"
+			],
+			[
+				"ef",
+				"effect_add\tstatement"
+			],
+			[
+				"pr",
+				"print"
+			],
+			[
+				"logg",
+				"logger\tstatement"
+			],
+			[
+				"ch",
+				"children"
+			],
+			[
+				"node_s",
+				"node_s_new\tstatement"
+			],
+			[
+				"eff",
+				"effnodes"
+			],
+			[
+				"a",
+				"a_levels\tstatement"
+			],
+			[
+				"s_",
+				"s_nodes"
+			],
+			[
+				"pare",
+				"parent"
+			],
+			[
+				"Pg",
+				"PgNode_a\tclass"
+			],
+			[
+				"cus",
+				"custom_score_5\tfunction"
+			],
+			[
+				"im",
+				"improved_score\tfunction"
+			],
+			[
+				"Player",
+				"player1"
+			],
+			[
+				"Wa",
+				"WARNING\tstatement"
+			],
+			[
+				"W",
+				"WARNING\tstatement"
+			],
+			[
+				"forma",
+				"formater\tstatement"
+			],
+			[
+				"Not",
+				"NOTSET\tstatement"
+			],
+			[
+				"NOT",
+				"NOTSET\tstatement"
+			],
+			[
+				"inf",
+				"info\tfunction"
+			],
+			[
+				"info",
+				"INFO\tstatement"
+			],
+			[
+				"e",
+				"effect_add\tstatement"
+			],
+			[
+				"effe",
+				"effect_rem\tstatement"
+			],
+			[
+				"p",
+				"pos\tstatement"
+			],
+			[
+				"state",
+				"state_map\tstatement"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "rat_esp.ino",
+			"settings":
+			{
+				"buffer_size": 10519,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "Packages/arduino-cli/arduino-cli.sublime-build",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/arduino-cli/arduino-cli.sublime-build",
+					""
+				],
+				[
+					"Packages/arduino-cli/arduino-cli.sublime-build",
+					"just build"
+				],
+				[
+					"Packages/arduino-cli/arduino-cli.sublime-build",
+					"build and upload"
+				]
+			],
+			[
+				"Packages/arduino-cli/arduino-cli.sublime-build",
+				"just build"
+			]
+		]
+	],
+	"build_varint": "just build",
+	"command_palette":
+	{
+		"height": 392.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"pack",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: re",
+				"Package Control: Remove Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"serial",
+				"Deviot: Serial Baudrate"
+			],
+			[
+				"delay",
+				"Snippet: Deviot delay()"
+			],
+			[
+				"c",
+				"Set Syntax: C++"
+			],
+			[
+				"git",
+				"GitHub: View"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"pyth",
+				"Set Syntax: Python3"
+			],
+			[
+				"c+",
+				"Set Syntax: C++"
+			],
+			[
+				"pac",
+				"Package Control: Install Package"
+			],
+			[
+				"diff",
+				"Diffy Compare"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"unit",
+				"Pyunit: Run All Tests"
+			],
+			[
+				"anaconda",
+				"Anaconda: Goto object definition"
+			],
+			[
+				"md",
+				"Set Syntax: Markdown Extended"
+			],
+			[
+				"pep8",
+				"Anaconda: Autoformat PEP8 Errors"
+			],
+			[
+				"test",
+				"PythonTest: Run project tests"
+			],
+			[
+				"uni",
+				"Pyunit: Run All Tests"
+			],
+			[
+				"men",
+				"View: Toggle Menu"
+			],
+			[
+				"comme",
+				"Toggle Comment"
+			],
+			[
+				"mark",
+				"Set Syntax: Markdown Extended"
+			]
+		],
+		"width": 497.0
+	},
+	"console":
+	{
+		"height": 143.0,
+		"history":
+		[
+			"print(sublime.active_window().active_view().)xds",
+			"print(sublime.active_window().active_view())",
+			"settings.get(\"port\")",
+			"settings = sublime.load_settings('./arduino-cli.sublime-settings')",
+			"sublime.load_settings('arduino-cli.sublime-settings')",
+			"res = sublime.load_resource(\"Packages/SashaSublime/Preferences.sublime-settings\")",
+			"pio -h",
+			"ls"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/home/mshokry/PWS/arduino/rat_esp"
+	],
+	"file_history":
+	[
+		"/home/mshokry/PWS/arduino/rat_esp/arduino-cli.sublime-settings",
+		"/home/mshokry/.config/sublime-text-3/Packages/User/arduino-cli.sublime-settings",
+		"/home/mshokry/PWS/Eagle/Rat_nest/rat_nest/Design1.rep",
+		"/home/mshokry/Programming/sublime_text_3/sublime.py",
+		"/home/mshokry/.cache/.fr-dczWjv/arduino-cli.sublime-build",
+		"/home/mshokry/PWS/arduino/rat_ardu/arduino-cli.sublime-settings",
+		"/home/mshokry/.config/sublime-text-3/Packages/User/esp.sublime-build",
+		"/home/mshokry/PWS/arduino/rat_ardu/rat_ardu.sublime-workspace",
+		"/home/mshokry/PWS/arduino/rat_ardu/rat_ardu.ino",
+		"/home/mshokry/python/app.py",
+		"/home/mshokry/PWS/arduino/libraries/WiFiManager/WiFiManager.h",
+		"/home/mshokry/PWS/arduino/libraries/WiFiManager/WiFiManager.cpp",
+		"/home/mshokry/PWS/arduino/esp_rfid_v2/rfid.php",
+		"/home/mshokry/PWS/arduino/rat_ardu/README.md",
+		"/home/mshokry/PWS/arduino/rat_esp/rat_esp.ino",
+		"/home/mshokry/.arduino15/packages/esp8266/hardware/esp8266/2.4.1/libraries/ESP8266WiFi/src/ESP8266WiFi.cpp",
+		"/home/mshokry/PWS/arduino/ToKSA_RFID_Ardu/ToKSA_RFID_Ardu.ino",
+		"/home/mshokry/PWS/arduino/esp_rfid_v2/finger.php",
+		"/home/mshokry/PWS/arduino/esp_rfid_v2/esp_rfid_v2.ino",
+		"/home/mshokry/PWS/arduino/esp_finger_v2/esp_finger_v2.ino",
+		"/home/mshokry/PWS/arduino/esp_rfid_v2/finger.php.old",
+		"/home/mshokry/PWS/arduino/esp_finger/esp_finger.ino",
+		"/home/mshokry/PWS/arduino/esp_finger/finger.md",
+		"/home/mshokry/.arduino15/packages/arduino/tools/avr-gcc/4.9.2-atmel3.5.4-arduino2/avr/include/avr/power.h",
+		"/mnt/MaDream/My projects/Iot/LoLin/AC/Update",
+		"/home/mshokry/PWS/arduino/rat_ard/rat_ard.ino",
+		"/home/mshokry/.config/sublime-text-3/Packages/User/GitHub.sublime-settings",
+		"/home/mshokry/.config/sublime-text-3/Packages/sublime-github/GitHub.sublime-settings",
+		"/home/mshokry/PWS/arduino/rat_arduino/rat_ardu.ino",
+		"/home/mshokry/PWS/AIND/AIND-Recognizer/my_model_selectors.py",
+		"/home/mshokry/PWS/AIND/AIND-Recognizer/asl_data.py",
+		"/home/mshokry/PWS/AIND/AIND-Recognizer/my_recognizer.py",
+		"/home/mshokry/PWS/AIND/AIND-Recognizer/asl_utils.py",
+		"/home/mshokry/PWS/arduino/rat/rat.ino",
+		"/home/mshokry/PWS/AIND/AIND-Planning/my_planning_graph.py",
+		"/home/mshokry/.config/sublime-text-3/Packages/Anaconda/Anaconda.sublime-settings",
+		"/home/mshokry/PWS/AIND/AIND-Planning/my_air_cargo_problems.py",
+		"/home/mshokry/PWS/AIND/AIND-Recognizer/data/speaker.csv",
+		"/home/mshokry/PWS/AIND/AIND-Recognizer/data/hands_condensed.csv",
+		"/home/mshokry/.config/sublime-text-3/Packages/User/Anaconda.sublime-settings",
+		"/home/mshokry/PWS/AIND/AIND-Planning/example_have_cake.py",
+		"/home/mshokry/PWS/AIND/AIND-Planning/README.md",
+		"/home/mshokry/PWS/AIND/AIND-Planning/REPORT",
+		"/home/mshokry/Downloads/voting.php",
+		"/home/mshokry/PWS/AIND/AIND-Planning/aimacode/search.py",
+		"/home/mshokry/PWS/AIND/AIND-Planning/mytest.py",
+		"/home/mshokry/PWS/AIND/AIND-Planning/p1.txt",
+		"/home/mshokry/PWS/AIND/AIND-Planning/p2.txt",
+		"/home/mshokry/PWS/AIND/AIND-Planning/p3.txt",
+		"/home/mshokry/PWS/AIND/AIND-Planning/oth.py",
+		"/home/mshokry/PWS/AIND/AIND-Planning/run_search_timer.py",
+		"/home/mshokry/PWS/AIND/AIND-Planning/run_search.py",
+		"/home/mshokry/PWS/AIND/AIND-Planning/rep.py",
+		"/home/mshokry/PWS/arduino/alexa/alexa.ino",
+		"/home/mshokry/PWS/arduino/RFID_READER/RFID_READER.ino",
+		"/home/mshokry/PWS/AIND/AIND-Planning/p1_results.txt",
+		"/home/mshokry/PWS/AIND/AIND-Planning/p2_results.txt",
+		"/home/mshokry/PWS/AIND/AIND-Planning/aimacode/utils.py",
+		"/home/mshokry/PWS/AIND/AIND-Isolation/test.log",
+		"/home/mshokry/PWS/AIND/AIND-Isolation/test2.log",
+		"/home/mshokry/PWS/AIND/AIND-Isolation/game_agent.py",
+		"/home/mshokry/PWS/AIND/AIND-Isolation/sample_players.py",
+		"/home/mshokry/PWS/AIND/AIND-Isolation/AIND-Isolation/isolation/isolation.py",
+		"/home/mshokry/PWS/AIND/AIND-Isolation/tournament.py",
+		"/home/mshokry/PWS/AIND/AIND-Isolation/log.log",
+		"/home/mshokry/PWS/AIND/AIND-Isolation/out.txt",
+		"/home/mshokry/.config/sublime-text-3/Packages/User/Python.sublime-settings",
+		"/home/mshokry/PWS/AIND/AIND-Isolation/README.md",
+		"/home/mshokry/PWS/AIND/AIND-Planning/my_air_cargo_problems.sublime-workspace"
+	],
+	"find":
+	{
+		"height": 25.0
+	},
+	"find_in_files":
+	{
+		"height": 101.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "rat_esp.ino",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 10519,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/arduino-cli/arduino.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 25.0
+	},
+	"input":
+	{
+		"height": 37.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 114.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "Packages/arduino-cli/arduino-cli.sublime-build",
+	"project": "rat_esp.sublime-project",
+	"replace":
+	{
+		"height": 46.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				".md",
+				"README.md"
+			],
+			[
+				"",
+				"my_air_cargo_problems.py"
+			],
+			[
+				"my",
+				"mytest.py"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"~/PWS/arduino/rat_ardu/rat_ardu.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 392.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 392.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": false,
+	"side_bar_width": 247.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

@@ -10,7 +10,7 @@
 #include <ESP8266httpUpdate.h>
 
 
-#define DEBUG 0
+#define DEBUG 1
 #if (DEBUG==1)
   #define PRINTDEBUGLN(STR) Serial.println(STR)
   #define PRINTDEBUG(STR) Serial.print(STR)
