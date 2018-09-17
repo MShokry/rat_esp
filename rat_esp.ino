@@ -30,9 +30,9 @@
 
 #define API "?name="
 // WIFI Configuration
-char update_server[30] = "7elol.com";
-char update_server_page[30] = "/update/config.php";
-char server[30] = "7elol.com";
+char update_server[30] = "192.168.0.105";
+char update_server_page[30] = "/api/v1/register-trap/";
+char server[30] = "192.168.0.105";
 char server_page[30] = "/update/rfid.php";
 char server_port[6] = "80";
 char PLACE[20] = "Nest1";
@@ -41,8 +41,8 @@ char static_ip[16] = "192.168.0.10";
 char static_gw[16] = "192.168.0.1";
 char static_sn[16] = "255.255.255.0";
 
-char SSID[24] = "airlive";
-char SSID_pwd[24] = "";
+char SSID[24] = "INOV";
+char SSID_pwd[24] = "ETA$Ebni_3210";
 //flag for saving data
 bool shouldSaveConfig = false;
 
@@ -81,16 +81,16 @@ bool load_wifi(){
           strcpy(SSID_pwd, json["ssid_pwd"]);
           PRINTDEBUGLN(SSID);
           PRINTDEBUGLN(SSID_pwd);
-          if(json["update_server"]) 
+          if(json.containsKey("update_server")) 
           strcpy(update_server, json["update_server"]);          
           PRINTDEBUGLN(update_server);
-          if(json["update_server_page"]) 
+          if(json.containsKey("update_server_page")) 
             strcpy(update_server_page, json["update_server_page"]);          
           PRINTDEBUGLN(update_server_page);
           //if(json["server"]) 
           strcpy(server, json["server"]);
           PRINTDEBUGLN(server);
-          if(json["server_page"])
+          if(json.containsKey("server_page"))
             strcpy(server_page, json["server_page"]);
           PRINTDEBUGLN(server_page);
           //if(json["server_port"]) 
@@ -98,7 +98,7 @@ bool load_wifi(){
           //if(json["place"])
           strcpy(PLACE, json["place"]);
           PRINTDEBUGLN(PLACE);
-          if(json["ip"]) {
+          if(json.containsKey("ip")) {
             PRINTDEBUGLN("setting custom ip from config");
             strcpy(static_ip, json["ip"]);
             strcpy(static_gw, json["gateway"]);
@@ -139,17 +139,18 @@ bool msg (String msg="alarm"){
   WiFiClient client;
   PRINTDEBUGLN("Connecting to:");
   PRINTDEBUGLN(server);
-  if(!client.connect(server, 80))
+  if(!client.connect(server, 8000))
   {
     PRINTDEBUGLN("Connection failed");
     return false;
   }
   // URL request
-
-  String url = String(server_page) + String(API) + String(PLACE) + String("&msg=");
-  url += msg;
-  url += String("&v=") + (ESP.getVcc());
-  url += String("&mac=") + String(WiFi.macAddress());
+//api/v1/alarm/(?P<msg>[a-zA-Z0-9])/(?P<volt>[a-zA-Z0-9])/(?P<mac>([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2}))/
+  String url = "/" + String(server_page) + msg  + "/" + ESP.getVcc()  + "/" + String(WiFi.macAddress()) + "/" ;
+  // String url = "/" + String(server_page) + String(API) + String(PLACE) + String("&msg=");
+  // url += msg;
+  // url += String("&v=") + (ESP.getVcc());
+  // url += String("&mac=") + String(WiFi.macAddress());
   PRINTDEBUGLN("Requesting URL:");
   PRINTDEBUGLN(url);
   client.print(String("GET ") + url + " HTTP/1.1\r\n" +
@@ -157,10 +158,43 @@ bool msg (String msg="alarm"){
                "User-Agent: ratnest\r\n" +
                "Connection: close\r\n\r\n");
   PRINTDEBUGLN("Request sent");
-  String line = client.readStringUntil('\n');
+  String line ;
   PRINTDEBUGLN(line);
-
-  return true;
+  while(client.connected())
+  {
+    line = client.readStringUntil('\n');
+    PRINTDEBUGLN(line);
+    if(line == "\r")
+    {
+      PRINTDEBUGLN("========");      
+      PRINTDEBUGLN("Headers received");
+      //break;
+    }
+    if(line.startsWith("{")){
+      break;
+    }
+  }
+  //String line = client.readStringUntil('\n');
+  PRINTDEBUGLN("Reply was:");
+  PRINTDEBUGLN("==========");
+  PRINTDEBUGLN(line);
+  PRINTDEBUGLN("==========");
+  PRINTDEBUGLN("Closing connection");
+  // Allocate a buffer to store contents of the file.
+  std::unique_ptr<char[]> buf(new char[600]);
+  DynamicJsonBuffer jsonBuffer;
+  JsonObject& json = jsonBuffer.parseObject(line);
+  #if (DEBUG==1)  
+    json.printTo(Serial);
+  #endif
+  if (json.success()) {
+    if(json["repeat"] == false){
+      return true;
+    }else {
+      return false;
+    }
+  }
+  return false;
 }
 
 /*************************************************************************************
@@ -172,17 +206,18 @@ bool config (String msg="config"){
   WiFiClient client;
   PRINTDEBUGLN("Connecting to:");
   PRINTDEBUGLN(update_server);
-  if(!client.connect(update_server, 80))
+  if(!client.connect(update_server, 8000))
   {
     PRINTDEBUGLN("Connection failed");
     return false;
   }
   // URL request
 
-  String url = String(update_server_page) + String(API) + String(PLACE) + String("&msg=");
-  url += msg;
-  url += String("&v=") + (ESP.getVcc());
-  url += String("&mac=") + String(WiFi.macAddress());
+  // String url = String(update_server_page) + String(API) + String(PLACE) + String("&msg=");
+  // url += msg;
+  // url += String("&v=") + (ESP.getVcc());
+  // url += String("&mac=") + String(WiFi.macAddress());
+  String url = "/" + String(update_server_page) + String(WiFi.macAddress()) + "/";
   PRINTDEBUGLN("Requesting URL:");
   PRINTDEBUGLN(url);
   client.print(String("GET ") + url + " HTTP/1.1\r\n" +
@@ -227,16 +262,16 @@ bool config (String msg="config"){
     strcpy(SSID_pwd, json["ssid_pwd"]);
     PRINTDEBUGLN(SSID);
     PRINTDEBUGLN(SSID_pwd);
-    if(json["update_server"]) 
-    strcpy(update_server, json["update_server"]);          
+    if(json.containsKey("update_server")) 
+      strcpy(update_server, json["update_server"]);          
     PRINTDEBUGLN(update_server);
-    if(json["update_server_page"]) 
+    if(json.containsKey("update_server_page"))
       strcpy(update_server_page, json["update_server_page"]);          
     PRINTDEBUGLN(update_server_page);
     //if(json["server"]) 
     strcpy(server, json["server"]);
     PRINTDEBUGLN(server);
-    if(json["server_page"])
+    if(json.containsKey("server_page"))
       strcpy(server_page, json["server_page"]);
     PRINTDEBUGLN(server_page);
     //if(json["server_port"]) 
@@ -244,7 +279,7 @@ bool config (String msg="config"){
     //if(json["place"])
     strcpy(PLACE, json["place"]);
     PRINTDEBUGLN(PLACE);
-    if(json["ip"]) {
+    if(json.containsKey("ip")) {
       PRINTDEBUGLN("setting custom ip from config");
       strcpy(static_ip, json["ip"]);
       strcpy(static_gw, json["gateway"]);
@@ -256,7 +291,7 @@ bool config (String msg="config"){
       return true;
     } else {
       PRINTDEBUGLN("no custom ip in config");
-      return false;
+      return true;
     }
   } else {
     PRINTDEBUGLN("failed to load json config");
@@ -328,10 +363,13 @@ void loop() {
     }else{
       status = msg("test");
     }
-    if(status)
+    if(status){
+      PRINTDEBUGLN("Alarm Done");
       digitalWrite(esp_ok, HIGH);
-    else
+    }else{
+      PRINTDEBUGLN("Alarm Repeat");
       digitalWrite(esp_ok, LOW);
+    }
     
     digitalWrite(esp_ack,HIGH);
 
@@ -387,6 +425,7 @@ void loop() {
         json.prettyPrintTo(Serial);
       #endif
       json.printTo(configFile);
+      delay(300);
       configFile.close();
       //end save
     }else{
